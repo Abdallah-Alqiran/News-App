@@ -46,4 +46,4 @@ app.*.map.json
 
 
 # Api
-lib\core\constant\api_constant.dart
+/lib/core/constant/api_constant.dart
