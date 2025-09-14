@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/core/styles/app_text_styles.dart';
 
 class CustomItemCardWidget extends StatelessWidget {
-  const CustomItemCardWidget({super.key, this.imageUrl, required this.title, required this.subTitle});
+  const CustomItemCardWidget({super.key, this.imageUrl, required this.title, required this.author, required this.date});
 
   final String? imageUrl;
   final String title;
-  final String subTitle;
+  final String author;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +17,23 @@ class CustomItemCardWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.sp, vertical: 10.sp),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 200.w,
+            width: 250.w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title),
+                Text(title, style: AppTextStyles.titlesStyle,),
                 SizedBox(height: 5.h),
-                Text(subTitle),
+                Text("$author - $date", style: AppTextStyles.subtitleStyle,),
               ],
             ),
           ),
 
           CachedNetworkImage(
-            width: 100.w,
-            height: 100.h,
+            width: 112.w,
+            height: 80.h,
             imageUrl:
                 imageUrl ??
                 'https://picsum.photos/400',

@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/core/utils/app_color.dart';
+import 'package:news_app/core/styles/app_color.dart';
+import 'package:news_app/core/styles/app_text_styles.dart';
 import 'package:news_app/features/data/home_services/home_services.dart';
 import 'package:news_app/features/home/widgets/custom_carosil_slider.dart';
 import 'package:news_app/features/home/widgets/custom_item_card_widget.dart';
@@ -29,15 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appBarColor,
-        toolbarHeight: 80.h,
-        leadingWidth: 100.w,
-        leading: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.sp),
-          child: Text(
-            LocaleKeys.explore.tr(),
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-        ),
+        toolbarHeight: 86.h,
+        leadingWidth: double.infinity,
+        title:  Text(
+                LocaleKeys.explore.tr(),
+                style: AppTextStyles.titlesStyle,
+              ),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
       ),
       body: SizedBox(
@@ -47,8 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SizedBox(height: 20.h),
             SizedBox(
-              height: 30.h,
+              height: 32.h,
               child: ListView(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: [
                   CustormTopHeadLine(
@@ -73,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20.h),
             CustomCarosilWidget(
               title: "Alqiran Unveils Revolutionary AI Features",
-              subTitle: "Abdallah Alqiran, 7 June 2025",
+              authorName: "Abdallah Alqiran, 7 June 2025",
+              date: "07-06-2005",
             ),
             SizedBox(height: 20.h),
             Expanded(
@@ -89,7 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         return CustomItemCardWidget(
                           imageUrl: snapshot.data!.articles[index].urlToImage,
                           title: snapshot.data!.articles[index].title ?? '',
-                          subTitle: snapshot.data!.articles[index].publishedAt ?? '',
+                          author: snapshot.data!.articles[index].author ?? '',
+                          date: snapshot.data!.articles[index].publishedAt ?? '',
+
                         );
                       },
                     );

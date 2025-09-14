@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/core/utils/app_color.dart';
+import 'package:news_app/core/styles/app_color.dart';
+import 'package:news_app/core/styles/app_text_styles.dart';
 
 class CustormTopHeadLine extends StatelessWidget {
   const CustormTopHeadLine({super.key, required this.name, required this.onTap});
@@ -16,13 +17,14 @@ class CustormTopHeadLine extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(20.sp),
         child: Container(
+          alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 18.sp),
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(color: AppColor.appBarColor, width: 2.0),
             borderRadius: BorderRadius.circular(20.sp),
           ),
-          child: Center(child: Text(name)),
+          child: Center(child: Text(name, style: AppTextStyles.black14SemiBold,)),
         ),
       ),
     );

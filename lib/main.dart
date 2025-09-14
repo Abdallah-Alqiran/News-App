@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/core/networking/dio_helper.dart';
-import 'package:news_app/features/home/screen/home_screen.dart';
+import 'package:news_app/core/routing/router_generator.dart';
 import 'package:news_app/translations/codegen_loader.g.dart';
 
 void main() async {
@@ -29,18 +29,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: false,
       builder: (_, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'News App',
           theme: ThemeData(textTheme: GoogleFonts.interTextTheme()),
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           debugShowCheckedModeBanner: false,
-          home: HomeScreen(),
+          routerConfig: RouterGenerator.goRouter,
         );
       },
     );
