@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
 
 class CustomItemCardWidget extends StatelessWidget {
-  const CustomItemCardWidget({super.key, this.imageUrl, required this.title, required this.author, required this.date});
+  const CustomItemCardWidget({super.key, required this.imageUrl, required this.title, required this.author, required this.date});
 
-  final String? imageUrl;
+  final String imageUrl;
   final String title;
   final String author;
   final String date;
@@ -24,7 +24,7 @@ class CustomItemCardWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTextStyles.titlesStyle,),
+                Text(title, style: AppTextStyles.titlesStyle,maxLines: 2, overflow: TextOverflow.ellipsis,),
                 SizedBox(height: 5.h),
                 Text("$author - $date", style: AppTextStyles.subtitleStyle,),
               ],
@@ -35,8 +35,7 @@ class CustomItemCardWidget extends StatelessWidget {
             width: 112.w,
             height: 80.h,
             imageUrl:
-                imageUrl ??
-                'https://picsum.photos/400',
+                imageUrl,
             placeholder: (context, url) => CircularProgressIndicator(),
             errorWidget:
                 (context, url, error) =>

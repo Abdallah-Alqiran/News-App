@@ -7,7 +7,7 @@ import 'package:news_app/core/networking/dio_helper.dart';
 import 'package:news_app/features/data/model/dio_helper_model.dart';
 
 class HomeServices {
-  static Future<TopHeadLineModel?> getTopHeadline() async{
+  static Future<ArticlesModel?> getTopHeadline() async{
     try {
       final response = await DioHeloper.getRequest(
         endPoint: ApiConstant.topHeadLines,
@@ -18,7 +18,7 @@ class HomeServices {
         } 
       );
 
-      TopHeadLineModel topHeadLineModel =  TopHeadLineModel.fromJson(response.data);
+      ArticlesModel topHeadLineModel =  ArticlesModel.fromJson(response.data);
       return topHeadLineModel;
     } on DioException catch (e) {
       log("dio error is: ${e.message}");

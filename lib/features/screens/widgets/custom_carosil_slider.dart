@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
 
 class CustomCarosilWidget extends StatelessWidget {
