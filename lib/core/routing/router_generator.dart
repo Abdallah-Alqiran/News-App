@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_app/core/routing/app_routes.dart';
+import 'package:news_app/features/screens/article_details_screen/article_details_screen.dart';
 import 'package:news_app/features/screens/home_screen/home_screen.dart';
 import 'package:news_app/features/screens/search_result_screen/search_result_screen.dart';
 
@@ -29,7 +30,7 @@ class RouterGenerator {
       GoRoute(
         path: AppRoutes.articleDetailsScreen,
         name: AppRoutes.articleDetailsScreen,
-        builder: (context, state) => Container(),
+        builder: (context, state) => ArticleDetailsScreen(),
       ),
     ],
   );

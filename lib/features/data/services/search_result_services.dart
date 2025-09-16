@@ -6,9 +6,9 @@ import 'package:news_app/core/networking/dio_helper.dart';
 import 'package:news_app/features/data/model/dio_helper_model.dart';
 
 class SearchResultServices {
-  searchItemByName(String query) async {
+  static Future<ArticlesModel?> searchItemByName(String query) async {
     try {
-      final Response response = await DioHeloper.getRequest(
+      final response = await DioHeloper.getRequest(
         endPoint: ApiConstant.everyThing,
         query: {"apiKey": ApiConstant.apiKey, "q": query},
       );
@@ -16,8 +16,9 @@ class SearchResultServices {
         ArticlesModel articlesModel = ArticlesModel.fromJson(response.data);
         return articlesModel;
       }
-    } catch (e) {
-      log(e.toString());
+    } on DioException catch (e) {
+      log("dio error is: ${e.message}");
     }
+    return null;
   }
 }

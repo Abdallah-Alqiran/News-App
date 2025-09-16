@@ -6,6 +6,7 @@ import 'package:news_app/core/routing/app_routes.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
 import 'package:news_app/features/data/services/home_services.dart';
+import 'package:news_app/features/screens/home_screen/widgets/search_text_field_widget.dart';
 import 'package:news_app/features/screens/widgets/custom_carosil_slider.dart';
 import 'package:news_app/features/screens/widgets/custom_item_card_widget.dart';
 import 'package:news_app/features/screens/widgets/custom_top_headline_widget.dart';
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: 86.h,
         leadingWidth: double.infinity,
         title: Text(LocaleKeys.explore.tr(), style: AppTextStyles.titlesStyle),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [SearchTextFieldWidget()],
       ),
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
@@ -97,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: snapshot.data!.articles[0].title ?? "",
                     authorName: snapshot.data!.articles[0].author ?? "",
                     date: snapshot.data!.articles[0].publishedAt ?? "",
+                    imageUrl: snapshot.data!.articles[0].urlToImage ??'https://picsum.photos/400',
                   ),
                   SizedBox(height: 20.h),
                   Expanded(
