@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:news_app/core/constant/api_constant.dart';
+import 'package:news_app/core/constant/app_constant.dart';
 import 'package:news_app/core/networking/dio_helper.dart';
 import 'package:news_app/features/data/model/dio_helper_model.dart';
 
@@ -15,6 +16,7 @@ class HomeServices {
           "country": "us",
           "apiKey": ApiConstant.apiKey,
           "category": "Technology",
+          "language": AppConstant.lang
         } 
       );
 

@@ -24,7 +24,7 @@ class CustormTopHeadLine extends StatelessWidget {
             border: Border.all(color: AppColor.appBarColor, width: 2.0),
             borderRadius: BorderRadius.circular(20.sp),
           ),
-          child: Center(child: Text(name, style: AppTextStyles.black14SemiBold,)),
+          child: Center(child: Text(name, style: AppTextStyles.black14Normal,)),
         ),
       ),
     );

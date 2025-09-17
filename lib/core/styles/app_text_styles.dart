@@ -10,6 +10,6 @@ class AppTextStyles {
   static TextStyle foodTitle = GoogleFonts.inter(fontSize: 24.sp, fontWeight: FontWeight.w400, color: Colors.black);
 
   static TextStyle white14SemiBold = GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.w500, color: AppColor.whiteColor);
-  static TextStyle black14SemiBold = GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.w700, color: AppColor.blackColor);
+  static TextStyle black14Normal = GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.normal, color: AppColor.blackColor);
   static TextStyle grey14Regular = GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.normal, color: AppColor.blackColor);
 }

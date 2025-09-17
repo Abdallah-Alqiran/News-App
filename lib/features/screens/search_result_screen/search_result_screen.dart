@@ -36,12 +36,7 @@ class SearchResultScreen extends StatelessWidget {
                     itemCount: snapshot.data!.articles.length,
                     itemBuilder: (context, index) {
                       return CustomItemCardWidget(
-                        imageUrl:
-                            snapshot.data!.articles[index].urlToImage ??
-                            'https://picsum.photos/400',
-                        title: snapshot.data!.articles[index].title ?? '',
-                        author: snapshot.data!.articles[index].author ?? '',
-                        date: snapshot.data!.articles[index].publishedAt ?? '',
+                        article: snapshot.data!.articles[index],
                       );
                     },
                   ),

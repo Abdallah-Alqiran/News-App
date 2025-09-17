@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:news_app/core/constant/app_constant.dart';
 import 'package:news_app/core/routing/app_routes.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
@@ -23,9 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void _changeLanguage() {
     if (context.locale == const Locale('en')) {
       context.setLocale(const Locale('ar'));
+      AppConstant.lang = "ar";
     } else {
       context.setLocale(const Locale('en'));
+      AppConstant.lang = "en";
     }
+    log("Language: ${AppConstant.lang}");
   }
 
   @override
@@ -94,11 +100,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
+                  if (snapshot.data!.articles.isNotEmpty)
                   CustomCarosilWidget(
                     title: snapshot.data!.articles[0].title ?? "",
                     authorName: snapshot.data!.articles[0].author ?? "",
                     date: snapshot.data!.articles[0].publishedAt ?? "",
-                    imageUrl: snapshot.data!.articles[0].urlToImage ??'https://picsum.photos/400',
+                    imageUrl:
+                        snapshot.data!.articles[0].urlToImage ??
+                        'https://picsum.photos/400',
                   ),
                   SizedBox(height: 20.h),
                   Expanded(
@@ -106,13 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: snapshot.data!.articles.length,
                       itemBuilder: (context, index) {
                         return CustomItemCardWidget(
-                          imageUrl:
-                              snapshot.data!.articles[index].urlToImage ??
-                              'https://picsum.photos/400',
-                          title: snapshot.data!.articles[index].title ?? '',
-                          author: snapshot.data!.articles[index].author ?? '',
-                          date:
-                              snapshot.data!.articles[index].publishedAt ?? '',
+                          article: snapshot.data!.articles[index],
                         );
                       },
                     ),
@@ -124,7 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _changeLanguage),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _changeLanguage,
+        backgroundColor: AppColor.appBarColor,
+        child: Icon(Icons.language),
+      ),
     );
   }
 }
