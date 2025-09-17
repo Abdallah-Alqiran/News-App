@@ -100,26 +100,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  if (snapshot.data!.articles.isNotEmpty)
-                  CustomCarosilWidget(
-                    title: snapshot.data!.articles[0].title ?? "",
-                    authorName: snapshot.data!.articles[0].author ?? "",
-                    date: snapshot.data!.articles[0].publishedAt ?? "",
-                    imageUrl:
-                        snapshot.data!.articles[0].urlToImage ??
-                        'https://picsum.photos/400',
-                  ),
-                  SizedBox(height: 20.h),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: snapshot.data!.articles.length,
-                      itemBuilder: (context, index) {
-                        return CustomItemCardWidget(
-                          article: snapshot.data!.articles[index],
-                        );
-                      },
+                  if (snapshot.data!.articles.isNotEmpty) ...[
+                    CustomCarosilWidget(
+                      title: snapshot.data!.articles[0].title ?? "",
+                      authorName: snapshot.data!.articles[0].author ?? "",
+                      date: snapshot.data!.articles[0].publishedAt ?? "",
+                      imageUrl:
+                          snapshot.data!.articles[0].urlToImage ??
+                          'https://picsum.photos/400',
                     ),
-                  ),
+                    SizedBox(height: 20.h),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.articles.length,
+                        itemBuilder: (context, index) {
+                          return CustomItemCardWidget(
+                            article: snapshot.data!.articles[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ] else ...[
+                    const Center(child: Text("لا توجد بيانات")),
+                  ],
                 ],
               );
             }
