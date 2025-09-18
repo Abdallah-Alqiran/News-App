@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_app/core/constant/app_constant.dart';
 import 'package:news_app/core/routing/app_routes.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
-import 'package:news_app/features/data/services/home_services.dart';
+import 'package:news_app/features/data/repo/home_repo.dart';
+import 'package:news_app/features/screens/home_screen/cubit/home_cubit.dart';
+import 'package:news_app/features/screens/home_screen/cubit/home_state.dart';
 import 'package:news_app/features/screens/home_screen/widgets/search_text_field_widget.dart';
 import 'package:news_app/features/screens/widgets/custom_carosil_slider.dart';
 import 'package:news_app/features/screens/widgets/custom_item_card_widget.dart';
@@ -36,6 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    context.read<HomeCubit>().getTopHeadline();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appBarColor,
@@ -46,13 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
-        child: FutureBuilder(
-          future: HomeServices.getTopHeadline(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+
+        child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+          if (state is LoadingState) {
               return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasData) {
-              return Column(
+          } else if (state is SucessState) {
+            final snapshot = (state).topHeadLineModel;
+            return Column(
                 children: [
                   SizedBox(height: 20.h),
                   SizedBox(
@@ -100,22 +106,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  if (snapshot.data!.articles.isNotEmpty) ...[
+                  if (snapshot.articles.isNotEmpty) ...[
                     CustomCarosilWidget(
-                      title: snapshot.data!.articles[0].title ?? "",
-                      authorName: snapshot.data!.articles[0].author ?? "",
-                      date: snapshot.data!.articles[0].publishedAt ?? "",
+                      title: snapshot.articles[0].title ?? "",
+                      authorName: snapshot.articles[0].author ?? "",
+                      date: snapshot.articles[0].publishedAt ?? "",
                       imageUrl:
-                          snapshot.data!.articles[0].urlToImage ??
+                          snapshot.articles[0].urlToImage ??
                           'https://picsum.photos/400',
                     ),
                     SizedBox(height: 20.h),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: snapshot.data!.articles.length,
+                        itemCount: snapshot.articles.length,
                         itemBuilder: (context, index) {
                           return CustomItemCardWidget(
-                            article: snapshot.data!.articles[index],
+                            article: snapshot.articles[index],
                           );
                         },
                       ),
@@ -125,10 +131,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ],
               );
-            }
-            return Center(child: Text(snapshot.error.toString()));
-          },
-        ),
+          } else if (state is ErrorState) {
+            return Text(state.error);
+          }
+          return Container(child: Text("Something went wrong"));
+        })
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _changeLanguage,

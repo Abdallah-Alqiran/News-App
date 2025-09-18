@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -7,21 +6,21 @@ import 'package:news_app/core/constant/app_constant.dart';
 import 'package:news_app/core/networking/dio_helper.dart';
 import 'package:news_app/features/data/model/dio_helper_model.dart';
 
-class HomeServices {
-  static Future<ArticlesModel?> getTopHeadline() async{
+class SearchResultRepo {
+  static Future<ArticlesModel?> searchItemByName(String query) async {
     try {
       final response = await DioHeloper.getRequest(
-        endPoint: ApiConstant.topHeadLines,
+        endPoint: ApiConstant.everyThing,
         query: {
-          "country": "us",
           "apiKey": ApiConstant.apiKey,
-          "category": "Technology",
-          "language": AppConstant.lang
-        } 
+          "q": query,
+          "language": AppConstant.lang,
+        },
       );
-
-      ArticlesModel topHeadLineModel =  ArticlesModel.fromJson(response.data);
-      return topHeadLineModel;
+      if (response.statusCode == 200) {
+        ArticlesModel articlesModel = ArticlesModel.fromJson(response.data);
+        return articlesModel;
+      }
     } on DioException catch (e) {
       log("dio error is: ${e.message}");
     }

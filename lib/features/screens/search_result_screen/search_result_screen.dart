@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
-import 'package:news_app/features/data/services/search_result_services.dart';
+import 'package:news_app/features/data/repo/search_result_repo.dart';
 import 'package:news_app/features/screens/widgets/custom_item_card_widget.dart';
 import 'package:news_app/generated/locale_keys.g.dart';
 
@@ -24,7 +24,7 @@ class SearchResultScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: SearchResultServices.searchItemByName(query),
+        future: SearchResultRepo.searchItemByName(query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
