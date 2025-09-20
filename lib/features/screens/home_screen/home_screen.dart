@@ -9,7 +9,6 @@ import 'package:news_app/core/constant/app_constant.dart';
 import 'package:news_app/core/routing/app_routes.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
-import 'package:news_app/features/data/repo/home_repo.dart';
 import 'package:news_app/features/screens/home_screen/cubit/home_cubit.dart';
 import 'package:news_app/features/screens/home_screen/cubit/home_state.dart';
 import 'package:news_app/features/screens/home_screen/widgets/search_text_field_widget.dart';
@@ -134,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (state is ErrorState) {
             return Text(state.error);
           }
-          return Container(child: Text("Something went wrong"));
+          return Text("Something went wrong");
         })
       ),
       floatingActionButton: FloatingActionButton(

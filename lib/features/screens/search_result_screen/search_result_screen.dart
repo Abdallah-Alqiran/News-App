@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/styles/app_color.dart';
 import 'package:news_app/core/styles/app_text_styles.dart';
 import 'package:news_app/features/data/repo/search_result_repo.dart';
+import 'package:news_app/features/screens/search_result_screen/cubit/search_result_cubit.dart';
+import 'package:news_app/features/screens/search_result_screen/cubit/search_result_state.dart';
 import 'package:news_app/features/screens/widgets/custom_item_card_widget.dart';
 import 'package:news_app/generated/locale_keys.g.dart';
 
@@ -12,31 +15,32 @@ class SearchResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<SearchResultCubit>().getSearchItemByName(query);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.appBarColor,
-        // toolbarHeight: 86.h,
-        // leadingWidth: double.infinity,
         title: Text(
           LocaleKeys.search_results.tr(),
           style: AppTextStyles.titlesStyle,
         ),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: SearchResultRepo.searchItemByName(query),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: BlocBuilder<SearchResultCubit, SearchResultState>(
+        builder: (context, state) {
+          if (state is LoadingState) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData) {
+          } else if (state is ErrorState) {
+            return Center(child: Text(state.error.toString()));
+          } else if (state is SucessState) {
             return Column(
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: snapshot.data!.articles.length,
+                    itemCount: state.searchModel.articles.length,
                     itemBuilder: (context, index) {
                       return CustomItemCardWidget(
-                        article: snapshot.data!.articles[index],
+                        article: state.searchModel.articles[index],
                       );
                     },
                   ),
@@ -44,7 +48,8 @@ class SearchResultScreen extends StatelessWidget {
               ],
             );
           }
-          return Center(child: Text(snapshot.error.toString()));
+
+          return Text("Unexpected Error");
         },
       ),
     );

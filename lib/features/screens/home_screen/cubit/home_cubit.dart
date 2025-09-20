@@ -9,7 +9,7 @@ class HomeCubit extends Cubit<HomeState> {
   
   getTopHeadline()  async{
     emit(LoadingState());
-
+    
     try {
       final ArticlesModel topHeadLineModel = await  HomeRepo.getTopHeadline() as ArticlesModel;
       emit(SucessState(topHeadLineModel: topHeadLineModel));

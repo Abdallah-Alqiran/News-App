@@ -6,6 +6,7 @@ import 'package:news_app/features/data/model/dio_helper_model.dart';
 import 'package:news_app/features/screens/article_details_screen/article_details_screen.dart';
 import 'package:news_app/features/screens/home_screen/cubit/home_cubit.dart';
 import 'package:news_app/features/screens/home_screen/home_screen.dart';
+import 'package:news_app/features/screens/search_result_screen/cubit/search_result_cubit.dart';
 import 'package:news_app/features/screens/search_result_screen/search_result_screen.dart';
 
 class RouterGenerator {
@@ -15,10 +16,8 @@ class RouterGenerator {
       GoRoute(
         path: AppRoutes.homeScreen,
         name: AppRoutes.homeScreen,
-        builder: (context, state) => BlocProvider(
-          create: (context) => HomeCubit(),
-          child: HomeScreen(),
-        ),
+        builder: (context, state) =>
+            BlocProvider(create: (context) => HomeCubit(), child: HomeScreen()),
       ),
       GoRoute(
         path: AppRoutes.searchScreen,
@@ -30,7 +29,10 @@ class RouterGenerator {
         name: AppRoutes.searchResultScreen,
         builder: (context, state) {
           String query = state.extra as String;
-          return SearchResultScreen(query: query);
+          return BlocProvider(
+            create: (context) => SearchResultCubit(),
+            child: SearchResultScreen(query: query),
+          );
         },
       ),
       GoRoute(
